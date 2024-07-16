@@ -11,6 +11,8 @@ Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Co
 # version v1.30.2
 Set-Location -Path $HOME\.apps
 
+#todo: create a funtion to verify downloads with online sha256 outputs.
+
 #get kubectl
 curl.exe -LO "https://dl.k8s.io/release/v1.30.0/bin/windows/amd64/kubectl.exe"
 curl.exe -LO "https://dl.k8s.io/v1.30.0/bin/windows/amd64/kubectl.exe.sha256"
