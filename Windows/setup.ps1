@@ -14,24 +14,26 @@ Set-Location -Path $HOME\.apps
 #todo: create a funtion to verify downloads with online sha256 outputs.
 
 #get kubectl
-curl.exe -LO "https://dl.k8s.io/release/v1.30.0/bin/windows/amd64/kubectl.exe"
-curl.exe -LO "https://dl.k8s.io/v1.30.0/bin/windows/amd64/kubectl.exe.sha256"
+curl.exe -LO "https://dl.k8s.io/release/v1.30.0/bin/windows/amd64/kubectl.exe" -O $HOME\.apps\kubectl.exe
+curl.exe -LO "https://dl.k8s.io/v1.30.0/bin/windows/amd64/kubectl.exe.sha256" -O $HOME\Downloads\kubectl.exe.sha256
 CertUtil -hashfile kubectl.exe SHA256 type kubectl.exe.sha256
-$(Get-FileHash -Algorithm SHA256 .\kubectl.exe).Hash -eq $(Get-Content .\kubectl.exe.sha256)
+$(Get-FileHash -Algorithm SHA256 $HOME\.apps\kubectl.exe).Hash -eq $(Get-Content $HOME\Downloads\kubectl.exe.sha25)
 
 #get helm
-curl.exe -LO "https://get.helm.sh/helm-v3.15.3-windows-amd64.zip"
-curl.exe -LO "https://get.helm.sh/helm-v3.15.3-windows-amd64.zip.sha256sum"
-CertUtil -hashfile helm-v3.15.3-windows-amd64.zip SHA256 type helm-v3.15.3-windows-amd64.zip.sha256
-$(Get-FileHash -Algorithm SHA256 .\helm-v3.15.3-windows-amd64.zip).Hash -eq $(Get-Content .\helm-v3.15.3-windows-amd64.zip.sha256)
+curl.exe -LO "https://get.helm.sh/helm-v3.15.3-windows-amd64.zip" -O $HOME\Downloads\helm.zip
+curl.exe -LO "https://get.helm.sh/helm-v3.15.3-windows-amd64.zip.sha256sum" -O $HOME\Downloads\helm.zip.sha256sum
+CertUtil -hashfile helm.zip SHA256 type helm.zip.sha256
+$(Get-FileHash -Algorithm SHA256 $HOME\Downloads\helm.zip).Hash -eq $(Get-Content $HOME\Downloads\helm.zip.sha256sum)
+
 
 #get talosctl
-curl.exe -LO "https://github.com/siderolabs/talos/releases/download/v1.7.5/talosctl-windows-amd64.exe"
-curl.exe -LO "https://github.com/siderolabs/talos/releases/download/v1.7.5/sha256sum.txt"
-CertUtil -hashfile talosctl-windows-amd64.exe SHA256 type talosctl-windows-amd64.exe.sha256
-$(Get-FileHash -Algorithm SHA256 .\talosctl-windows-amd64.exe).Hash -eq $(Get-Content .\talosctl-windows-amd64.exe.sha256)
+curl.exe -LO "https://github.com/siderolabs/talos/releases/download/v1.7.5/talosctl-windows-amd64.exe" -O $HOME\.apps\talosctl.exe
+curl.exe -LO "https://github.com/siderolabs/talos/releases/download/v1.7.5/sha256sum.txt" -O $HOME\Downloads\sha256sum.txt
+CertUtil -hashfile talosctl.exe SHA256 type talosctl.exe.sha256
+$(Get-FileHash -Algorithm SHA256 $HOME\.apps\talosctl.exe).Hash -eq $(Get-Content .\talosctl.exe.sha256)
+move-item -path $HOME\.apps\talosctl-windows-amd64.exe -destination $HOME\.apps\talosctl.exe
 
 #get talos iso.
 New-Item -ItemType Directory -Force -Path $HOME\talos
-Set-Location -Path $HOME\.apps
-curl.exe -LO "https://github.com/siderolabs/talos/releases/download/v1.7.5/metal-amd64.iso"
+Set-Location -Path $HOME\Downloads
+curl.exe -LO "https://github.com/siderolabs/talos/releases/download/v1.7.5/metal-amd64.iso" -O $HOME\Downloads
